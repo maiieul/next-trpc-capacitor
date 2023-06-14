@@ -3,8 +3,6 @@
  * for Docker builds.
  */
 
-import { env } from "./src/env.mjs";
-
 /** @type {import('next').NextConfig} */
 const config = {
   eslint: {

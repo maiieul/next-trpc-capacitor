@@ -1,29 +1,24 @@
-# Create T3 App
+# Next-trpc-capacitor
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a template project to show how to add capacitor on top of Next.js and trpc. Bootstrapped with `create-t3-app`.
 
-## What's next? How do I make an app with this?
+## How to
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### 1. Run locally
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- Clone the project and create a new repository from it; or fork the project and clone it
+- cd into the project (`cd next-trpc-capacitor`)
+- Install dependencies (e.g. `pnpm install`)
+- Copy the `.env.example` file to a `.env` file and fill in the variables. You can already set the NEXT_PUBLIC_SERVER_URL env var to represent the url of your deployed server (e.g. https://your-project-name.vercel.app)
+- Test if everything works locally (`npm run dev`)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### 2. Deploy to Vercel
 
-## Learn More
+- Go to your vercel dashboard, add a new project and link it to your github repository (https://vercel.com/dashboard).
+  - ⚠️ Make sure to properly add the environment variables to avoid any error(NEXT_PUBLIC_SERVER_TYPE="production" and NEXT_PUBLIC_SERVER_URL="https://your-project-name.vercel.app")
+- Check if your project builds and runs properly on vercel
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### 3. Run on Capacitor
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
-# next-trpc-capacitor
+- Run `npm run cap`. This script will first execute `npm run build`, but with a modified version of the `next.config.mjs` file that gets created only when running `npm run cap` (for that, I set up a condition inside `next.config.mjs` that changes the NEXT_PUBLIC_SERVER_TYPE to "capacitor" and adds `config.output = "export"` to the config object). Then, it will execute `npx cap sync` to make sure you don't forget.
+- Run `npx cap open android` (or `npx cap open ios`). This will open Android Studio and you can run the app on your device or emulator. If this command doesn't open Android Studio (or Xcode), you can open it manually and run the app from there.

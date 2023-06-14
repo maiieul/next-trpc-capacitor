@@ -11,17 +11,15 @@ import superjson from "superjson";
 import { env } from "~/env.mjs";
 import { type AppRouter } from "~/server/api/root";
 
-console.log("NEXT_PUBLIC_SERVER_TYPE", env.NEXT_PUBLIC_SERVER_TYPE);
-
 const getBaseUrl = () => {
   if (env.NEXT_PUBLIC_SERVER_TYPE === "capacitor") {
-    return env.NEXT_PUBLIC_DOMAIN_URL; // Capacitor should use absolute url because it is deployed as a static site and has no access to api routes. Capacitor doesn't suffer from CORS issues since it uses the native http client through CapacitorHttp.
+    return env.NEXT_PUBLIC_SERVER_URL; // Capacitor should use absolute url because it is deployed as a static site and has no access to api routes. Capacitor doesn't suffer from CORS issues since it uses the native http client through CapacitorHttp.
   }
   if (typeof window !== "undefined") return ""; // browser should use relative url
 
   // SSR - can still be used to generate ssr pages to display a blog or something. Those pages should be removed when deploying to capacitor or fall back to ssg. How to do it is up to you.
   if (env.NEXT_PUBLIC_SERVER_TYPE === "production") {
-    return `https://${env.NEXT_PUBLIC_DOMAIN_URL}`; // SSR should use absolute url
+    return `https://${env.NEXT_PUBLIC_SERVER_URL}`; // SSR should use absolute url
   }
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
